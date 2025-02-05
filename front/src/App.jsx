@@ -1,22 +1,23 @@
-import React from 'react'
-import './App.css'
+import React from "react";
+import "./App.css"
 import { createBrowserRouter, createRoutesFromElements, RouterProvider, Route } from 'react-router-dom'
-
-// const browserRouter = createBrowserRouter(createRoutesFromElements(
-
-//   <Route path='/' >
-//     <Route index element={""} />
-//   </Route>
-// ))
+import Login from "./components/login";
+import Home from "./components/home";
 
 
-export default function Login (){
+const browserRouter = createBrowserRouter(createRoutesFromElements(
+  <Route path='/' >
+    <Route index element={ <Login /> } />
+    <Route path='/login' element={ <Login /> } />
+    <Route path='/home' element={ <Home /> } />
+  </Route>
 
+))
+
+export default function App() {
   return (
-    <div className='container'>
-      <h1>Login</h1>
-      <input type="text" placeholder='User' className='caixa'/>
-      <input type="password" placeholder='Password' className='caixa'/>
-    </div>
-  )
+
+    <RouterProvider router={browserRouter} />
+
+  );
 }
