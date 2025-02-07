@@ -22,8 +22,6 @@ def listar_professores(request):
         else:
 
             return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
-
-
         
 class ProfessoresView(ListCreateAPIView):
     queryset = Professor.objects.all()

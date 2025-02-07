@@ -1,0 +1,34 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+}
+body{
+    background-color: black;
+    color: white;
+}
+.container-home{
+    width: 100%;
+}
+header{
+    margin-bottom: 30px;
+}
+header .search{
+    margin-top: 30px;
+    width: 500px;
+    height: 60px;
+    border-radius: 20px;
+}
+.card{
+    display: flex;
+    gap: 60px;
+}
+table{
+    width: 1200px;
+    border: 1px solid;
+}
+th{
+    border-bottom: 1px solid white;
+}
+
