@@ -6,7 +6,6 @@ import './styles.css'
 export default function Home() {
     const [dados, setDados] = useState([])
     const token = localStorage.getItem('token')
-    console.log("Token Home", token)
 
     useEffect(() => {
 
@@ -28,45 +27,67 @@ export default function Home() {
         }
 
         fetchData()
-    }, [])
+    }, [dados])
+
+    const apagar = async (id)=>{
+        try {
+             await axios.delete(`http://127.0.0.1:8000/api/professor/${id}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            )
+            setDados(dados.filter((professor)=>{professor.id !== id}))
+        } catch (error) {
+            alert("Faça Login Novamente! ")
+            console.log(error)
+        }
+    }
 
     return (
-        <div className="container-home">
-            <header>
-                <h1>Lista de Professores</h1>
-                <input className="search" type="search" placeholder="Buscar" />
-            </header>
-            
-            <section className="body">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nome</th>
-                            <th>Email</th>
-                            <th>Telefone</th>
-                            <th>Ocupação</th>
-                            <th>Ações</th>
+        <>
+            <h2>Lista de Professores</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ações</th>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Telefone</th>
+                        <th>Ocupação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {dados.map((dado) => (
+                        <tr key={dado.ni}>
+                            <td>
+                                <FaSearch className="icon" /> 
+                                <FaTrash className="icon" onClick={() => apagar(dado.id)} /> 
+                            </td>
+                            <td>{dado.n1}</td>
+                            <td>{dado.nome}</td>
+                            <td>{dado.email}</td>
+                            <td>{dado.tel}</td>
+                            <td>{dado.ocupacao}</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {dados.map((dado) => (
-                            <tr key={dado.id}>
-                                <td>{dado.n1}</td>
-                                <td>{dado.nome}</td>
-                                <td>{dado.email}</td>
-                                <td>{dado.tel}</td>
-                                <td>{dado.ocupacao}</td>
-                                <td>
-                                    <FaSearch /> <FaEdit /> <FaPlus /> <FaTrash />
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </section>
+                    ))}
+                </tbody>
+            </table>
             
-            <footer></footer>
-        </div>
-    )
+            <footer>
+                <div className="btn1">
+                    <FaPlus className="adicionar" />
+                    <p>Adicionar</p>
+                </div>
+                <div className="btn2">
+                    <FaPlus className="delete" />
+                    <p>Delete</p>
+                </div>
+                
+            </footer>
+        </>
+    );
 }

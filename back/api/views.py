@@ -26,14 +26,15 @@ def listar_professores(request):
 class ProfessoresView(ListCreateAPIView):
     queryset = Professor.objects.all()
     serializer_class = ProfessorSerializer
-    permission_classes = [IsAuthenticated]
 
 class ProfessoresDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Professor.objects.all()
     serializer_class = ProfessorSerializer
+    permission_classes = [IsAuthenticated]
     
 class ProfessoresDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Professor.objects.all()
     serializer_class = ProfessorSerializer
+    permission_classes = [IsAuthenticated]
 
     
