@@ -9,9 +9,10 @@ import ModalProfessores from "../modal";
 
 export default function Home() {
     const [dados, setDados] = useState([])
-    const token = localStorage.getItem('token')
     const [modalOpen, setModalOpen] = useState(false)
     const [professorSelecionado, setProfessorSelecionado] = useState(null)
+    const [seta, setSeta] = useState(false)
+    const token = localStorage.getItem('token')
 
     useEffect(() => {
 
@@ -34,7 +35,7 @@ export default function Home() {
         }
 
         fetchData()
-    }, [])
+    }, [seta])
 
     const apagar = async (id) => {
         if (true) {
@@ -47,12 +48,12 @@ export default function Home() {
                     }
                 )
                 setDados(dados.filter((professor) => { professor.id !== id }))
+                setSeta(!seta)
             } catch (error) {
                 console.error(error)
             }
         }
     }
-
     const criar = async (novoProfessor) => {
         console.log("Novo Professor: ", novoProfessor)
         try {
@@ -74,6 +75,7 @@ export default function Home() {
             console.log("Dados Inseridos: ", response.data)
             setDados([...dados, novoProfessor])
             setModalOpen(false)
+            setSeta(!seta)
         }
         catch (error) {
             console.error(error)
@@ -82,7 +84,7 @@ export default function Home() {
     const atualizar = async (professorAtualizado) => {
         console.log("Professor Atualizado: ", professorAtualizado)
         try {
-            const response = await axios.put(`http://127.0.0.1:8000/api/professores${professorAtualizado.id}`,
+            const response = await axios.put(`http://127.0.0.1:8000/api/professor/${professorAtualizado.id}`,
                 {
                     n1: professorAtualizado.n1,
                     nome: professorAtualizado.nome,
@@ -97,7 +99,7 @@ export default function Home() {
                 }
             )
             console.log("Dados Atualizados com Sucesso: ", response.data)
-            setDados(dados.map((professor)=> professor.id === professorAtualizado.id ? professorAtualizado : professor))
+            setDados(dados.map((professor) => professor.id === professorAtualizado.id ? professorAtualizado : professor))
             setModalOpen(false)
         }
         catch (error) {
@@ -107,7 +109,7 @@ export default function Home() {
     }
 
     return (
-        <div >
+        <div>
             <Header />
             <div className="container_home">
                 <div className="lista">
@@ -128,7 +130,7 @@ export default function Home() {
                                 <tr key={professor.id} className="campos">
                                     <td className="icons">
                                         <div className="col1">
-                                            <FaEdit className="edit"  />
+                                            <FaEdit className="edit" onClick={() => atualizar(professorSelecionado)} />
                                         </div>
                                         <div className="col2">
                                             <FaTrash className="delete" onClick={() => apagar(professor.id)} />
