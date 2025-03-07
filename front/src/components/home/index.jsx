@@ -114,6 +114,7 @@ export default function Home() {
             <div className="container_home">
                 <div className="lista">
                     <table>
+
                         <thead>
                             <tr className="titles">
                                 <th>Ações</th>
@@ -135,7 +136,6 @@ export default function Home() {
                                         <div className="col2">
                                             <FaTrash className="delete" onClick={() => apagar(professor.id)} />
                                         </div>
-
                                     </td>
                                     <div className="col3"><td>{professor.id}</td></div>
                                     <div className="col4"><td>{professor.n1}</td></div>
